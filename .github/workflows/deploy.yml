@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         run: |
           wrangler pages deploy .open-next/assets \
-            --project-name=youre-great \
+            --project-name=6pm \
             --branch=${{ github.head_ref || github.ref_name }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
