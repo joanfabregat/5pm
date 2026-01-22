@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { CountdownClock } from './components/CountdownClock';
 import { Settings } from './components/Settings';
-import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, startWindowDrag } from './lib/platform';
+import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, loadTransparent, saveTransparent, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
 
 function App() {
   const [targetHour, setTargetHour] = useState(18);
   const [alwaysOnTop, setAlwaysOnTop] = useState(false);
+  const [transparent, setTransparent] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
@@ -14,6 +15,14 @@ function App() {
       setAlwaysOnTop(value);
       setWindowAlwaysOnTop(value);
     });
+    loadTransparent().then((value) => {
+      setTransparent(value);
+      setWindowTransparent(value);
+    });
+    restoreWindowState();
+
+    const cleanup = setupWindowStateListener();
+    return cleanup;
   }, []);
 
   const handleTargetHourChange = async (hour: number) => {
@@ -25,6 +34,12 @@ function App() {
     setAlwaysOnTop(value);
     await saveAlwaysOnTop(value);
     await setWindowAlwaysOnTop(value);
+  };
+
+  const handleTransparentChange = async (value: boolean) => {
+    setTransparent(value);
+    await saveTransparent(value);
+    await setWindowTransparent(value);
   };
 
   return (
@@ -42,6 +57,8 @@ function App() {
           onTargetHourChange={handleTargetHourChange}
           alwaysOnTop={alwaysOnTop}
           onAlwaysOnTopChange={handleAlwaysOnTopChange}
+          transparent={transparent}
+          onTransparentChange={handleTransparentChange}
           onClose={() => setShowSettings(false)}
         />
       ) : (

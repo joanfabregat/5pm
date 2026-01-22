@@ -20,14 +20,14 @@
   }
 }
 
-/* Transparent background for desktop app */
-:root[data-tauri] {
-  --background: rgba(248, 248, 248, 0.85);
+/* Transparent background for desktop app (when enabled) */
+:root[data-transparent] {
+  --background: rgba(255, 255, 255, 0.001);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root[data-tauri] {
-    --background: rgba(10, 10, 10, 0.85);
+  :root[data-transparent] {
+    --background: rgba(0, 0, 0, 0.001);
   }
 }
 
@@ -56,3 +56,4 @@ body {
   /* Desktop: account for title bar overlay */
   padding-top: env(titlebar-area-height, 0px);
 }
+

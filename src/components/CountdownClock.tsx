@@ -13,7 +13,7 @@ export function CountdownClock({ targetHour }: Props) {
       {/* Large countdown display */}
       <div
         className="font-bold tabular-nums tracking-tight text-zinc-900 dark:text-zinc-100 leading-none"
-        style={{ fontSize: 'clamp(4rem, min(30vh, 35vw), 14rem)' }}
+        style={{ fontSize: 'clamp(4rem, min(30vh, 32vw), 14rem)' }}
       >
         {formatted}
       </div>
@@ -21,7 +21,7 @@ export function CountdownClock({ targetHour }: Props) {
       {/* Subtitle */}
       <p
         className="text-zinc-500 dark:text-zinc-400 mt-3"
-        style={{ fontSize: 'clamp(1rem, min(6vh, 7vw), 2.5rem)' }}
+        style={{ fontSize: 'clamp(1rem, min(6vh, 6.5vw), 2.5rem)' }}
       >
         until {formatTargetTime(targetHour)}
       </p>
