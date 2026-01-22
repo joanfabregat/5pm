@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import { CountdownClock } from './components/CountdownClock';
 import { Settings } from './components/Settings';
-import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
+import { isTauri, loadTargetHour, saveTargetHour, loadTargetMinute, saveTargetMinute, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
 import { useUpdater } from './hooks/useUpdater';
 
 function App() {
   const [targetHour, setTargetHour] = useState(18);
+  const [targetMinute, setTargetMinute] = useState(0);
   const [alwaysOnTop, setAlwaysOnTop] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const { updateAvailable, checking, installing, upToDate, error, checkForUpdates, installUpdate, dismissUpdate } = useUpdater();
 
   useEffect(() => {
     loadTargetHour().then(setTargetHour);
+    loadTargetMinute().then(setTargetMinute);
     loadAlwaysOnTop().then((value) => {
       setAlwaysOnTop(value);
       setWindowAlwaysOnTop(value);
@@ -23,9 +25,11 @@ function App() {
     return cleanup;
   }, []);
 
-  const handleTargetHourChange = async (hour: number) => {
+  const handleTargetTimeChange = async (hour: number, minute: number) => {
     setTargetHour(hour);
+    setTargetMinute(minute);
     await saveTargetHour(hour);
+    await saveTargetMinute(minute);
   };
 
   const handleAlwaysOnTopChange = async (value: boolean) => {
@@ -38,7 +42,7 @@ function App() {
     <div className="window-container">
       {/* Update banner */}
       {updateAvailable && (
-        <div className="absolute top-0 left-0 right-0 bg-blue-500 text-white text-xs px-3 py-1.5 flex items-center justify-between z-20">
+        <div className="absolute top-0 left-0 right-0 bg-blue-500 text-white text-xs pl-20 pr-3 py-1.5 flex items-center justify-between z-20">
           <span>v{updateAvailable.version} available</span>
           <div className="flex gap-2">
             <button
@@ -67,7 +71,8 @@ function App() {
       {showSettings ? (
         <Settings
           targetHour={targetHour}
-          onTargetHourChange={handleTargetHourChange}
+          targetMinute={targetMinute}
+          onTargetTimeChange={handleTargetTimeChange}
           alwaysOnTop={alwaysOnTop}
           onAlwaysOnTopChange={handleAlwaysOnTopChange}
           onClose={() => setShowSettings(false)}
@@ -78,7 +83,7 @@ function App() {
         />
       ) : (
         <div className="flex flex-col h-full">
-          <CountdownClock targetHour={targetHour} />
+          <CountdownClock targetHour={targetHour} targetMinute={targetMinute} />
           <button
             onClick={() => setShowSettings(true)}
             className="absolute bottom-3 right-3 p-2 rounded-lg

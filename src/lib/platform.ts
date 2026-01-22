@@ -42,6 +42,46 @@ export async function saveTargetHour(hour: number): Promise<void> {
   }
 }
 
+export async function loadTargetMinute(): Promise<number> {
+  const DEFAULT_MINUTE = 0;
+
+  if (isTauri) {
+    try {
+      const { load } = await import('@tauri-apps/plugin-store');
+      const store = await load('settings.json', {
+        defaults: { targetMinute: DEFAULT_MINUTE },
+        autoSave: true,
+      });
+      const minute = await store.get<number>('targetMinute');
+      return minute ?? DEFAULT_MINUTE;
+    } catch {
+      return DEFAULT_MINUTE;
+    }
+  } else {
+    // Web: use localStorage
+    const stored = localStorage.getItem('targetMinute');
+    return stored ? parseInt(stored, 10) : DEFAULT_MINUTE;
+  }
+}
+
+export async function saveTargetMinute(minute: number): Promise<void> {
+  if (isTauri) {
+    try {
+      const { load } = await import('@tauri-apps/plugin-store');
+      const store = await load('settings.json', {
+        defaults: { targetMinute: 0 },
+        autoSave: true,
+      });
+      await store.set('targetMinute', minute);
+    } catch {
+      // Fallback silently
+    }
+  } else {
+    // Web: use localStorage
+    localStorage.setItem('targetMinute', minute.toString());
+  }
+}
+
 export async function startWindowDrag(): Promise<void> {
   if (isTauri) {
     try {

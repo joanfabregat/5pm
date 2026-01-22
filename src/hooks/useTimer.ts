@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getTimeUntilTarget, formatTime, type TimeRemaining } from '../lib/time';
 
-export function useTimer(targetHour: number) {
+export function useTimer(targetHour: number, targetMinute: number = 0) {
   const [time, setTime] = useState<TimeRemaining | null>(null);
 
   useEffect(() => {
-    const update = () => setTime(getTimeUntilTarget(targetHour));
+    const update = () => setTime(getTimeUntilTarget(targetHour, targetMinute));
 
     update(); // Initial update
     const interval = setInterval(update, 1000);
 
     return () => clearInterval(interval);
-  }, [targetHour]);
+  }, [targetHour, targetMinute]);
 
   return {
     hours: time?.hours ?? 0,

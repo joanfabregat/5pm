@@ -3,11 +3,11 @@ export interface TimeRemaining {
   minutes: number;
 }
 
-export function getTimeUntilTarget(targetHour: number = 18): TimeRemaining {
+export function getTimeUntilTarget(targetHour: number = 18, targetMinute: number = 0): TimeRemaining {
   const now = new Date();
   const target = new Date(now);
 
-  target.setHours(targetHour, 0, 0, 0);
+  target.setHours(targetHour, targetMinute, 0, 0);
 
   // If target time has passed, roll over to tomorrow
   if (now >= target) {
@@ -25,8 +25,8 @@ export function formatTime(hours: number, minutes: number): string {
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
 
-export function formatTargetTime(hour: number): string {
+export function formatTargetTime(hour: number, minute: number = 0): string {
   const period = hour >= 12 ? 'PM' : 'AM';
   const displayHour = hour % 12 || 12;
-  return `${displayHour}:00 ${period}`;
+  return `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
 }

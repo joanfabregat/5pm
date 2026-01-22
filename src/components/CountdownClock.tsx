@@ -3,10 +3,11 @@ import { formatTargetTime } from '../lib/time';
 
 interface Props {
   targetHour: number;
+  targetMinute: number;
 }
 
-export function CountdownClock({ targetHour }: Props) {
-  const { formatted } = useTimer(targetHour);
+export function CountdownClock({ targetHour, targetMinute }: Props) {
+  const { formatted } = useTimer(targetHour, targetMinute);
 
   return (
     <div className="flex flex-col items-center justify-center h-full px-6 py-8">
@@ -23,7 +24,7 @@ export function CountdownClock({ targetHour }: Props) {
         className="text-zinc-500 dark:text-zinc-400 mt-1"
         style={{ fontSize: 'clamp(0.875rem, min(8vh, 5.5vw), 2rem)' }}
       >
-        until {formatTargetTime(targetHour)}
+        until {formatTargetTime(targetHour, targetMinute)}
       </p>
     </div>
   );

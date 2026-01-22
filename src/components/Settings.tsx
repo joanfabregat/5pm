@@ -3,7 +3,8 @@ import { isTauri } from '../lib/platform';
 
 interface Props {
   targetHour: number;
-  onTargetHourChange: (hour: number) => void;
+  targetMinute: number;
+  onTargetTimeChange: (hour: number, minute: number) => void;
   alwaysOnTop: boolean;
   onAlwaysOnTopChange: (alwaysOnTop: boolean) => void;
   onClose: () => void;
@@ -13,8 +14,14 @@ interface Props {
   updateError?: string | null;
 }
 
-export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, onClose, onCheckForUpdates, checkingForUpdates, upToDate, updateError }: Props) {
-  const hours = Array.from({ length: 24 }, (_, i) => i);
+// Generate 30-minute increment options (48 total: 0:00, 0:30, 1:00, 1:30, ... 23:30)
+const timeOptions = Array.from({ length: 48 }, (_, i) => ({
+  hour: Math.floor(i / 2),
+  minute: (i % 2) * 30,
+}));
+
+export function Settings({ targetHour, targetMinute, onTargetTimeChange, alwaysOnTop, onAlwaysOnTopChange, onClose, onCheckForUpdates, checkingForUpdates, upToDate, updateError }: Props) {
+  const currentValue = `${targetHour}:${targetMinute}`;
 
   return (
     <div className="flex flex-col h-full overflow-y-auto">
@@ -28,16 +35,19 @@ export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlways
           Target Time
         </span>
         <select
-          value={targetHour}
-          onChange={(e) => onTargetHourChange(Number(e.target.value))}
+          value={currentValue}
+          onChange={(e) => {
+            const [hour, minute] = e.target.value.split(':').map(Number);
+            onTargetTimeChange(hour, minute);
+          }}
           className="mt-1 block w-full rounded-lg border border-zinc-300 dark:border-zinc-600
                      bg-white dark:bg-zinc-800 px-3 py-2
                      text-zinc-900 dark:text-zinc-100
                      focus:outline-none focus:ring-2 focus:ring-zinc-500"
         >
-          {hours.map((h) => (
-            <option key={h} value={h}>
-              {formatTargetTime(h)}
+          {timeOptions.map(({ hour, minute }) => (
+            <option key={`${hour}:${minute}`} value={`${hour}:${minute}`}>
+              {formatTargetTime(hour, minute)}
             </option>
           ))}
         </select>
