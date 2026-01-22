@@ -9,9 +9,13 @@ interface Props {
   transparent: boolean;
   onTransparentChange: (transparent: boolean) => void;
   onClose: () => void;
+  onCheckForUpdates?: () => void;
+  checkingForUpdates?: boolean;
+  upToDate?: boolean;
+  updateError?: string | null;
 }
 
-export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, transparent, onTransparentChange, onClose }: Props) {
+export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, transparent, onTransparentChange, onClose, onCheckForUpdates, checkingForUpdates, upToDate, updateError }: Props) {
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
   return (
@@ -74,7 +78,23 @@ export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlways
         </>
       )}
 
-      <div className="mt-4">
+      {isTauri && onCheckForUpdates && (
+          <button
+            onClick={onCheckForUpdates}
+            disabled={checkingForUpdates || upToDate}
+            className={`mt-4 w-full py-2 text-sm transition-colors
+                       ${upToDate
+                         ? 'text-green-600 dark:text-green-400'
+                         : updateError
+                           ? 'text-red-500 dark:text-red-400'
+                           : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200'}
+                       disabled:opacity-70`}
+          >
+            {checkingForUpdates ? 'Checking...' : upToDate ? 'You\'re up to date!' : updateError ? 'Could not check for updates' : 'Check for Updates'}
+          </button>
+        )}
+
+        <div className="mt-4">
           <button
             onClick={onClose}
             className="w-full py-2 bg-zinc-900 dark:bg-zinc-100

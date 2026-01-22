@@ -14,8 +14,8 @@
       {
         "label": "main",
         "title": "6pm",
-        "width": 320,
-        "height": 240,
+        "width": 420,
+        "height": 220,
         "resizable": true,
         "minWidth": 280,
         "minHeight": 180,
@@ -31,9 +31,18 @@
     },
     "macOSPrivateApi": true
   },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://github.com/joanfabregat/6pm/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE2NjIyQzgwMEE4QjRDMTAKUldRUVRJc0tnQ3hpRnBiem5qbllKNFVLTTExWmhTbDBKTzhCY0xsUExrckI5NzliK3IrcSs0TzgK"
+    }
+  },
   "bundle": {
     "active": true,
     "targets": ["dmg", "app"],
+    "createUpdaterArtifacts": true,
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

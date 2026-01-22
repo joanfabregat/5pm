@@ -4,6 +4,8 @@ use tauri::menu::{AboutMetadata, Menu, PredefinedMenuItem, Submenu};
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_updater::Builder::default().build())
+        .plugin(tauri_plugin_process::init())
         .setup(|app| {
             let handle = app.handle();
 

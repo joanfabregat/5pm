@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { CountdownClock } from './components/CountdownClock';
 import { Settings } from './components/Settings';
 import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, loadTransparent, saveTransparent, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
+import { useUpdater } from './hooks/useUpdater';
 
 function App() {
   const [targetHour, setTargetHour] = useState(18);
   const [alwaysOnTop, setAlwaysOnTop] = useState(false);
   const [transparent, setTransparent] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const { updateAvailable, checking, installing, upToDate, error, checkForUpdates, installUpdate, dismissUpdate } = useUpdater();
 
   useEffect(() => {
     loadTargetHour().then(setTargetHour);
@@ -44,6 +46,27 @@ function App() {
 
   return (
     <div className="window-container">
+      {/* Update banner */}
+      {updateAvailable && (
+        <div className="absolute top-0 left-0 right-0 bg-blue-500 text-white text-xs px-3 py-1.5 flex items-center justify-between z-20">
+          <span>v{updateAvailable.version} available</span>
+          <div className="flex gap-2">
+            <button
+              onClick={installUpdate}
+              disabled={installing}
+              className="px-2 py-0.5 bg-white/20 hover:bg-white/30 rounded text-xs disabled:opacity-50"
+            >
+              {installing ? 'Installing...' : 'Update'}
+            </button>
+            <button
+              onClick={dismissUpdate}
+              className="px-2 py-0.5 hover:bg-white/20 rounded text-xs"
+            >
+              Later
+            </button>
+          </div>
+        </div>
+      )}
       {/* Drag region for window movement (desktop only) */}
       {isTauri && (
         <div
@@ -60,6 +83,10 @@ function App() {
           transparent={transparent}
           onTransparentChange={handleTransparentChange}
           onClose={() => setShowSettings(false)}
+          onCheckForUpdates={() => checkForUpdates(true)}
+          checkingForUpdates={checking}
+          upToDate={upToDate}
+          updateError={error}
         />
       ) : (
         <div className="flex flex-col h-full">
