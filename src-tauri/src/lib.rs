@@ -11,7 +11,6 @@ pub fn run() {
 
             let about_metadata = AboutMetadata {
                 name: Some("6pm".into()),
-                version: Some("0.1.0".into()),
                 comments: Some("A minimalist countdown timer".into()),
                 copyright: Some("© Joan Fabrégat\njoan@fabreg.at • joanfabregat.com".into()),
                 ..Default::default()

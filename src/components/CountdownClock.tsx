@@ -21,7 +21,7 @@ export function CountdownClock({ targetHour }: Props) {
       {/* Subtitle */}
       <p
         className="text-zinc-500 dark:text-zinc-400 mt-1"
-        style={{ fontSize: 'clamp(1rem, min(10vh, 6.5vw), 2.5rem)' }}
+        style={{ fontSize: 'clamp(0.875rem, min(8vh, 5.5vw), 2rem)' }}
       >
         until {formatTargetTime(targetHour)}
       </p>

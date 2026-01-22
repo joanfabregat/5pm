@@ -47,17 +47,10 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
-      - name: Update version in package.json
-        run: |
-          sed -i '' 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.VERSION }}"/' package.json
-
-      - name: Update version in tauri.conf.json
-        run: |
-          sed -i '' 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.VERSION }}"/' src-tauri/tauri.conf.json
-
-      - name: Update version in Cargo.toml
-        run: |
-          sed -i '' 's/^version = "[^"]*"/version = "${{ steps.version.outputs.VERSION }}"/' src-tauri/Cargo.toml
+      - name: Update version in config files
+        run: node scripts/update-build-version.cjs
+        env:
+          APP_VERSION: ${{ steps.version.outputs.VERSION }}
 
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0

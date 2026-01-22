@@ -1,6 +1,6 @@
 [package]
 name = "sixpm"
-version = "0.1.0"
+version = "0.0.0-dev"
 description = "A macOS timer that counts down to your target time"
 authors = ["you"]
 edition = "2021"

@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "6pm",
-  "version": "0.1.0",
+  "version": "0.0.0-dev",
   "identifier": "com.6pm.desktop",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -41,7 +41,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["dmg", "app"],
+    "targets": [
+      "dmg",
+      "app"
+    ],
     "createUpdaterArtifacts": true,
     "icon": [
       "icons/32x32.png",

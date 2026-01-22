@@ -1,13 +1,14 @@
 {
   "name": "6pm",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.0.0-dev",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "dev:desktop": "tauri dev",
     "build": "tsc && vite build",
-    "build:desktop": "tauri build",
+    "build:desktop": "node scripts/update-build-version.cjs && tauri build",
+    "version:update": "node scripts/update-build-version.cjs",
     "preview": "vite preview",
     "tauri": "tauri"
   },
