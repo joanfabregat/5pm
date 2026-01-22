@@ -1,3 +1,10 @@
+<!--
+  ~ Copyright (c) 2026 Code Inc. - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and confidential
+  ~ Visit <https://www.codeinc.co> for more information
+  -->
+
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Vite Dev Server" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
@@ -7,9 +14,6 @@
     </scripts>
     <node-interpreter value="project" />
     <envs />
-    <EXTENSION ID="com.intellij.javascript.debugger.execution.StartBrowserRunConfigurationExtension">
-      <browser with-js-debugger="true" />
-    </EXTENSION>
     <method v="2" />
   </configuration>
 </component>
