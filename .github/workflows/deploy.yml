@@ -7,11 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,6 +36,29 @@ jobs:
 
       - name: Build with OpenNext
         run: npx opennextjs-cloudflare build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: .open-next
+          retention-days: 1
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: .open-next
+
+      - name: Install wrangler
+        run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
         run: |
