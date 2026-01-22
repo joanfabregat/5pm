@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,26 +24,14 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Install wrangler
-        run: npm install -g wrangler
-
-      - name: Generate version.json
-        run: |
-          TAG="${GITHUB_REF_NAME}"
-          if [[ ! "$TAG" =~ ^v ]]; then
-            TAG="v0.0.0"
-          fi
-          COMMIT="${GITHUB_SHA}"
-          echo "{\"tag\":\"${TAG}\",\"commit\":\"${COMMIT}\"}" > public/version.json
-
-      - name: Build with OpenNext
-        run: npx opennextjs-cloudflare build
+      - name: Build
+        run: npm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: .open-next
+          path: out
           retention-days: 1
 
   deploy:
@@ -55,16 +45,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-output
-          path: .open-next
+          path: out
 
-      - name: Install wrangler
+      - name: Install Wrangler
         run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
-        run: |
-          wrangler pages deploy .open-next/assets \
-            --project-name=6pm \
-            --branch=${{ github.head_ref || github.ref_name }}
+        run: wrangler pages deploy out --project-name=6pm --branch=main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
