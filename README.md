@@ -2,7 +2,7 @@
 
 A minimalist countdown timer that shows the time remaining until a target hour. Available as a native macOS desktop app and a web app.
 
-![6pm screenshot](assets/screenshot.png)
+<img src="assets/screenshot.png" alt="6pm screenshot" width="400">
 
 ## Features
 
