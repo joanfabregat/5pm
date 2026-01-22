@@ -1,12 +1,12 @@
 [package]
-name = "sixpm-desktop"
+name = "sixpm"
 version = "0.1.0"
 description = "A macOS timer that counts down to your target time"
 authors = ["you"]
 edition = "2021"
 
 [lib]
-name = "sixpm_desktop_lib"
+name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
