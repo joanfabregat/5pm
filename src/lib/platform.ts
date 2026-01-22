@@ -96,57 +96,15 @@ export async function setWindowAlwaysOnTop(alwaysOnTop: boolean): Promise<void> 
   }
 }
 
-export async function loadTransparent(): Promise<boolean> {
-  if (isTauri) {
-    try {
-      const { load } = await import('@tauri-apps/plugin-store');
-      const store = await load('settings.json', {
-        defaults: { transparent: true },
-        autoSave: true,
-      });
-      const value = await store.get<boolean>('transparent');
-      return value ?? true;
-    } catch {
-      return true;
-    }
-  }
-  return false;
-}
-
-export async function saveTransparent(transparent: boolean): Promise<void> {
-  if (isTauri) {
-    try {
-      const { load } = await import('@tauri-apps/plugin-store');
-      const store = await load('settings.json', {
-        defaults: { transparent: true },
-        autoSave: true,
-      });
-      await store.set('transparent', transparent);
-    } catch {
-      // Fallback silently
-    }
-  }
-}
-
-export async function setWindowTransparent(transparent: boolean): Promise<void> {
-  if (transparent) {
-    document.documentElement.setAttribute('data-transparent', '');
-  } else {
-    document.documentElement.removeAttribute('data-transparent');
-  }
-
+export async function setWindowTransparent(): Promise<void> {
   if (isTauri) {
     try {
       const { getCurrentWindow, Effect, EffectState } = await import('@tauri-apps/api/window');
       const win = getCurrentWindow();
-      if (transparent) {
-        await win.setEffects({
-          effects: [Effect.Popover],
-          state: EffectState.Active,
-        });
-      } else {
-        await win.setEffects({ effects: [] });
-      }
+      await win.setEffects({
+        effects: [Effect.Popover],
+        state: EffectState.Active,
+      });
     } catch {
       // Ignore errors
     }

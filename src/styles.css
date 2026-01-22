@@ -9,25 +9,14 @@
 }
 
 :root {
-  --background: #f8f8f8;
+  --background: transparent;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* Transparent background for desktop app (when enabled) */
-:root[data-transparent] {
-  --background: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root[data-transparent] {
     --background: transparent;
+    --foreground: #ededed;
   }
 }
 

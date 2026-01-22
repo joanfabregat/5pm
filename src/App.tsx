@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { CountdownClock } from './components/CountdownClock';
 import { Settings } from './components/Settings';
-import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, loadTransparent, saveTransparent, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
+import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, setWindowTransparent, startWindowDrag, restoreWindowState, setupWindowStateListener } from './lib/platform';
 import { useUpdater } from './hooks/useUpdater';
 
 function App() {
   const [targetHour, setTargetHour] = useState(18);
   const [alwaysOnTop, setAlwaysOnTop] = useState(false);
-  const [transparent, setTransparent] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const { updateAvailable, checking, installing, upToDate, error, checkForUpdates, installUpdate, dismissUpdate } = useUpdater();
 
@@ -17,10 +16,7 @@ function App() {
       setAlwaysOnTop(value);
       setWindowAlwaysOnTop(value);
     });
-    loadTransparent().then((value) => {
-      setTransparent(value);
-      setWindowTransparent(value);
-    });
+    setWindowTransparent();
     restoreWindowState();
 
     const cleanup = setupWindowStateListener();
@@ -36,12 +32,6 @@ function App() {
     setAlwaysOnTop(value);
     await saveAlwaysOnTop(value);
     await setWindowAlwaysOnTop(value);
-  };
-
-  const handleTransparentChange = async (value: boolean) => {
-    setTransparent(value);
-    await saveTransparent(value);
-    await setWindowTransparent(value);
   };
 
   return (
@@ -70,7 +60,7 @@ function App() {
       {/* Drag region for window movement (desktop only) */}
       {isTauri && (
         <div
-          className="absolute top-0 left-0 right-0 h-10 z-10 cursor-grab active:cursor-grabbing"
+          className="absolute top-0 left-0 right-0 h-10 z-10"
           onMouseDown={() => startWindowDrag()}
         />
       )}
@@ -80,8 +70,6 @@ function App() {
           onTargetHourChange={handleTargetHourChange}
           alwaysOnTop={alwaysOnTop}
           onAlwaysOnTopChange={handleAlwaysOnTopChange}
-          transparent={transparent}
-          onTransparentChange={handleTransparentChange}
           onClose={() => setShowSettings(false)}
           onCheckForUpdates={() => checkForUpdates(true)}
           checkingForUpdates={checking}
@@ -94,7 +82,7 @@ function App() {
           <button
             onClick={() => setShowSettings(true)}
             className="absolute bottom-3 right-3 p-2 rounded-lg
-                       text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300
+                       text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200
                        hover:bg-zinc-100 dark:hover:bg-zinc-800
                        transition-colors"
             title="Settings"

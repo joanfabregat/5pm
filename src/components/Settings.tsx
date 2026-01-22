@@ -6,8 +6,6 @@ interface Props {
   onTargetHourChange: (hour: number) => void;
   alwaysOnTop: boolean;
   onAlwaysOnTopChange: (alwaysOnTop: boolean) => void;
-  transparent: boolean;
-  onTransparentChange: (transparent: boolean) => void;
   onClose: () => void;
   onCheckForUpdates?: () => void;
   checkingForUpdates?: boolean;
@@ -15,7 +13,7 @@ interface Props {
   updateError?: string | null;
 }
 
-export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, transparent, onTransparentChange, onClose, onCheckForUpdates, checkingForUpdates, upToDate, updateError }: Props) {
+export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, onClose, onCheckForUpdates, checkingForUpdates, upToDate, updateError }: Props) {
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
   return (
@@ -46,36 +44,20 @@ export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlways
       </label>
 
       {isTauri && (
-        <>
-          <label className="flex items-center gap-3 mb-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={alwaysOnTop}
-              onChange={(e) => onAlwaysOnTopChange(e.target.checked)}
-              className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-600
-                         text-zinc-900 dark:text-zinc-100
-                         focus:ring-2 focus:ring-zinc-500 focus:ring-offset-0
-                         bg-white dark:bg-zinc-800"
-            />
-            <span className="text-base text-zinc-600 dark:text-zinc-400">
-              Always on top
-            </span>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={transparent}
-              onChange={(e) => onTransparentChange(e.target.checked)}
-              className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-600
-                         text-zinc-900 dark:text-zinc-100
-                         focus:ring-2 focus:ring-zinc-500 focus:ring-offset-0
-                         bg-white dark:bg-zinc-800"
-            />
-            <span className="text-base text-zinc-600 dark:text-zinc-400">
-              Transparent
-            </span>
-          </label>
-        </>
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={alwaysOnTop}
+            onChange={(e) => onAlwaysOnTopChange(e.target.checked)}
+            className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-600
+                       text-zinc-900 dark:text-zinc-100
+                       focus:ring-2 focus:ring-zinc-500 focus:ring-offset-0
+                       bg-white dark:bg-zinc-800"
+          />
+          <span className="text-base text-zinc-600 dark:text-zinc-400">
+            Always on top
+          </span>
+        </label>
       )}
 
       {isTauri && onCheckForUpdates && (
