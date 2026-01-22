@@ -48,7 +48,8 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Update version in package.json
-        run: npm version ${{ steps.version.outputs.VERSION }} --no-git-tag-version
+        run: |
+          sed -i '' 's/"version": "[^"]*"/"version": "${{ steps.version.outputs.VERSION }}"/' package.json
 
       - name: Update version in tauri.conf.json
         run: |
