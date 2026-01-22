@@ -113,6 +113,14 @@ npm run build
 npm run build:desktop
 ```
 
+### Running on macOS
+
+Since the app is not signed, macOS will quarantine it by default. To run the app, you need to remove the quarantine attribute:
+
+```bash
+xattr -d com.apple.quarantine /Applications/6pm.app
+```
+
 ## IDE Setup
 
 Recommended: [VS Code](https://code.visualstudio.com/) with:
