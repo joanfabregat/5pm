@@ -2,6 +2,8 @@
 
 A minimalist countdown timer that shows the time remaining until a target hour. Available as a native macOS desktop app and a web app.
 
+![6pm screenshot](assets/screenshot.png)
+
 ## Features
 
 - **Countdown Display** - Large, readable timer showing hours and minutes until your target time
