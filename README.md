@@ -120,3 +120,7 @@ Recommended: [VS Code](https://code.visualstudio.com/) with:
 ## Deployment
 
 The web version auto-deploys to Cloudflare Pages via GitHub Actions when a version tag is pushed.
+
+## License
+
+[MIT](LICENSE)
