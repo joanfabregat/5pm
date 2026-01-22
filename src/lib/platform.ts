@@ -52,3 +52,46 @@ export async function startWindowDrag(): Promise<void> {
     }
   }
 }
+
+export async function loadAlwaysOnTop(): Promise<boolean> {
+  if (isTauri) {
+    try {
+      const { load } = await import('@tauri-apps/plugin-store');
+      const store = await load('settings.json', {
+        defaults: { alwaysOnTop: false },
+        autoSave: true,
+      });
+      const value = await store.get<boolean>('alwaysOnTop');
+      return value ?? false;
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
+export async function saveAlwaysOnTop(alwaysOnTop: boolean): Promise<void> {
+  if (isTauri) {
+    try {
+      const { load } = await import('@tauri-apps/plugin-store');
+      const store = await load('settings.json', {
+        defaults: { alwaysOnTop: false },
+        autoSave: true,
+      });
+      await store.set('alwaysOnTop', alwaysOnTop);
+    } catch {
+      // Fallback silently
+    }
+  }
+}
+
+export async function setWindowAlwaysOnTop(alwaysOnTop: boolean): Promise<void> {
+  if (isTauri) {
+    try {
+      const { getCurrentWindow } = await import('@tauri-apps/api/window');
+      await getCurrentWindow().setAlwaysOnTop(alwaysOnTop);
+    } catch {
+      // Not in Tauri, ignore
+    }
+  }
+}

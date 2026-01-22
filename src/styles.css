@@ -20,6 +20,17 @@
   }
 }
 
+/* Transparent background for desktop app */
+:root[data-tauri] {
+  --background: rgba(248, 248, 248, 0.85);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-tauri] {
+    --background: rgba(10, 10, 10, 0.85);
+  }
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;

@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
 import { CountdownClock } from './components/CountdownClock';
 import { Settings } from './components/Settings';
-import { isTauri, loadTargetHour, saveTargetHour, startWindowDrag } from './lib/platform';
+import { isTauri, loadTargetHour, saveTargetHour, loadAlwaysOnTop, saveAlwaysOnTop, setWindowAlwaysOnTop, startWindowDrag } from './lib/platform';
 
 function App() {
   const [targetHour, setTargetHour] = useState(18);
+  const [alwaysOnTop, setAlwaysOnTop] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     loadTargetHour().then(setTargetHour);
+    loadAlwaysOnTop().then((value) => {
+      setAlwaysOnTop(value);
+      setWindowAlwaysOnTop(value);
+    });
   }, []);
 
   const handleTargetHourChange = async (hour: number) => {
     setTargetHour(hour);
     await saveTargetHour(hour);
+  };
+
+  const handleAlwaysOnTopChange = async (value: boolean) => {
+    setAlwaysOnTop(value);
+    await saveAlwaysOnTop(value);
+    await setWindowAlwaysOnTop(value);
   };
 
   return (
@@ -29,6 +40,8 @@ function App() {
         <Settings
           targetHour={targetHour}
           onTargetHourChange={handleTargetHourChange}
+          alwaysOnTop={alwaysOnTop}
+          onAlwaysOnTopChange={handleAlwaysOnTopChange}
           onClose={() => setShowSettings(false)}
         />
       ) : (

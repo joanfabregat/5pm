@@ -1,12 +1,15 @@
 import { formatTargetTime } from '../lib/time';
+import { isTauri } from '../lib/platform';
 
 interface Props {
   targetHour: number;
   onTargetHourChange: (hour: number) => void;
+  alwaysOnTop: boolean;
+  onAlwaysOnTopChange: (alwaysOnTop: boolean) => void;
   onClose: () => void;
 }
 
-export function Settings({ targetHour, onTargetHourChange, onClose }: Props) {
+export function Settings({ targetHour, onTargetHourChange, alwaysOnTop, onAlwaysOnTopChange, onClose }: Props) {
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
   return (
@@ -15,7 +18,7 @@ export function Settings({ targetHour, onTargetHourChange, onClose }: Props) {
         Settings
       </h2>
 
-      <label className="block mb-6">
+      <label className="block mb-4">
         <span className="text-sm text-zinc-600 dark:text-zinc-400">
           Target Time
         </span>
@@ -34,6 +37,23 @@ export function Settings({ targetHour, onTargetHourChange, onClose }: Props) {
           ))}
         </select>
       </label>
+
+      {isTauri && (
+        <label className="flex items-center gap-3 mb-6 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={alwaysOnTop}
+            onChange={(e) => onAlwaysOnTopChange(e.target.checked)}
+            className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-600
+                       text-zinc-900 dark:text-zinc-100
+                       focus:ring-2 focus:ring-zinc-500 focus:ring-offset-0
+                       bg-white dark:bg-zinc-800"
+          />
+          <span className="text-base text-zinc-600 dark:text-zinc-400">
+            Always on top
+          </span>
+        </label>
+      )}
 
       <div className="mt-auto">
         <button
