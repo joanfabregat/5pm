@@ -135,7 +135,23 @@ export async function setWindowTransparent(transparent: boolean): Promise<void> 
     document.documentElement.removeAttribute('data-transparent');
   }
 
+  if (isTauri) {
+    try {
+      const { getCurrentWindow, Effect, EffectState } = await import('@tauri-apps/api/window');
+      const win = getCurrentWindow();
+      if (transparent) {
+        await win.setEffects({
+          effects: [Effect.Popover],
+          state: EffectState.Active,
+        });
+      } else {
+        await win.setEffects({ effects: [] });
+      }
+    } catch {
+      // Ignore errors
+    }
   }
+}
 
 interface WindowState {
   x: number;

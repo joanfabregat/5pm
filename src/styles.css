@@ -22,12 +22,12 @@
 
 /* Transparent background for desktop app (when enabled) */
 :root[data-transparent] {
-  --background: rgba(255, 255, 255, 0.001);
+  --background: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
   :root[data-transparent] {
-    --background: rgba(0, 0, 0, 0.001);
+    --background: transparent;
   }
 }
 
@@ -56,4 +56,5 @@ body {
   /* Desktop: account for title bar overlay */
   padding-top: env(titlebar-area-height, 0px);
 }
+
 
