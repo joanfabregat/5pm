@@ -1,18 +1,7 @@
-# 6pm
+# Tauri + React + Typescript
 
-[![Deploy to Cloudflare Pages](https://github.com/YOUR_USERNAME/6pm/actions/workflows/deploy.yml/badge.svg)](https://github.com/YOUR_USERNAME/6pm/actions/workflows/deploy.yml)
+This template should help get you started developing with Tauri, React and Typescript in Vite.
 
-A countdown clock showing hours and minutes until 6:00 PM.
+## Recommended IDE Setup
 
-## Getting Started
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Deployment
-
-Automatically deploys to Cloudflare Pages on push to `main`.
+- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
