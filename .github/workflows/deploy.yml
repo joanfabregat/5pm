@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Install wrangler
+        run: npm install -g wrangler
+
       - name: Generate version.json
         run: |
           TAG="${GITHUB_REF_NAME}"
@@ -33,9 +36,6 @@ jobs:
           fi
           COMMIT="${GITHUB_SHA}"
           echo "{\"tag\":\"${TAG}\",\"commit\":\"${COMMIT}\"}" > public/version.json
-
-      - name: Install wrangler
-        run: npm install -g wrangler
 
       - name: Build with OpenNext
         run: npx opennextjs-cloudflare build
