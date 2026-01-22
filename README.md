@@ -84,7 +84,7 @@ The countdown logic (`src/lib/time.ts`) calculates time remaining until the targ
 
 ### Prerequisites
 
-- Node.js 24+
+- Node.js 22+
 - Rust (for desktop builds)
 - Xcode Command Line Tools (macOS)
 
