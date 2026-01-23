@@ -9,14 +9,26 @@
 }
 
 :root {
-  --background: transparent;
+  /* Web: use actual colors for background */
+  --background: #ffffff;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: transparent;
+    --background: #171717;
     --foreground: #ededed;
+  }
+}
+
+/* Tauri: use transparent to let native window effects show through */
+:root.tauri {
+  --background: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root.tauri {
+    --background: transparent;
   }
 }
 
