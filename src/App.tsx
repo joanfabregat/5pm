@@ -25,17 +25,17 @@ function App() {
     return cleanup;
   }, []);
 
-  const handleTargetTimeChange = async (hour: number, minute: number) => {
+  const handleSettingsSave = async (hour: number, minute: number, newAlwaysOnTop: boolean) => {
     setTargetHour(hour);
     setTargetMinute(minute);
     await saveTargetHour(hour);
     await saveTargetMinute(minute);
-  };
 
-  const handleAlwaysOnTopChange = async (value: boolean) => {
-    setAlwaysOnTop(value);
-    await saveAlwaysOnTop(value);
-    await setWindowAlwaysOnTop(value);
+    if (newAlwaysOnTop !== alwaysOnTop) {
+      setAlwaysOnTop(newAlwaysOnTop);
+      await saveAlwaysOnTop(newAlwaysOnTop);
+      await setWindowAlwaysOnTop(newAlwaysOnTop);
+    }
   };
 
   return (
@@ -72,9 +72,8 @@ function App() {
         <Settings
           targetHour={targetHour}
           targetMinute={targetMinute}
-          onTargetTimeChange={handleTargetTimeChange}
           alwaysOnTop={alwaysOnTop}
-          onAlwaysOnTopChange={handleAlwaysOnTopChange}
+          onSave={handleSettingsSave}
           onClose={() => setShowSettings(false)}
           onCheckForUpdates={() => checkForUpdates(true)}
           checkingForUpdates={checking}
