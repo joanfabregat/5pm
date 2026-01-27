@@ -14,8 +14,8 @@
       {
         "label": "main",
         "title": "5pm",
-        "width": 420,
-        "height": 220,
+        "width": 280,
+        "height": 180,
         "resizable": true,
         "minWidth": 280,
         "minHeight": 180,
