@@ -1,8 +1,8 @@
-# 6pm
+# 5pm
 
 A minimalist countdown timer that shows the time remaining until a target hour. Available as a native macOS desktop app and a web app.
 
-<img src="assets/screenshot.png" alt="6pm screenshot" width="400">
+<img src="assets/screenshot.png" alt="5pm screenshot" width="400">
 
 ## Features
 
@@ -28,7 +28,7 @@ A minimalist countdown timer that shows the time remaining until a target hour. 
 ## Project Structure
 
 ```
-6pm/
+5pm/
 ├── src/                      # React frontend
 │   ├── App.tsx               # Main app component
 │   ├── main.tsx              # Entry point
@@ -118,7 +118,7 @@ npm run build:desktop
 Since the app is not signed, macOS will quarantine it by default. To run the app, you need to remove the quarantine attribute:
 
 ```bash
-xattr -d com.apple.quarantine /Applications/6pm.app
+xattr -d com.apple.quarantine /Applications/5pm.app
 ```
 
 ## IDE Setup

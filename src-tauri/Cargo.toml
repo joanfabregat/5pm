@@ -1,5 +1,5 @@
 [package]
-name = "sixpm"
+name = "fivepm"
 version = "0.0.0-dev"
 description = "A macOS timer that counts down to your target time"
 authors = ["you"]

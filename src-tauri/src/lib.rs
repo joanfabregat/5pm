@@ -10,27 +10,27 @@ pub fn run() {
             let handle = app.handle();
 
             let about_metadata = AboutMetadata {
-                name: Some("6pm".into()),
+                name: Some("5pm".into()),
                 comments: Some("A minimalist countdown timer".into()),
                 copyright: Some("© Joan Fabrégat\njoan@fabreg.at • joanfabregat.com".into()),
                 ..Default::default()
             };
 
-            // Build custom app menu with "6pm" as the name
+            // Build custom app menu with "5pm" as the name
             let app_menu = Submenu::with_items(
                 handle,
-                "6pm",
+                "5pm",
                 true,
                 &[
-                    &PredefinedMenuItem::about(handle, Some("About 6pm"), Some(about_metadata))?,
+                    &PredefinedMenuItem::about(handle, Some("About 5pm"), Some(about_metadata))?,
                     &PredefinedMenuItem::separator(handle)?,
                     &PredefinedMenuItem::services(handle, None)?,
                     &PredefinedMenuItem::separator(handle)?,
-                    &PredefinedMenuItem::hide(handle, Some("Hide 6pm"))?,
+                    &PredefinedMenuItem::hide(handle, Some("Hide 5pm"))?,
                     &PredefinedMenuItem::hide_others(handle, None)?,
                     &PredefinedMenuItem::show_all(handle, None)?,
                     &PredefinedMenuItem::separator(handle)?,
-                    &PredefinedMenuItem::quit(handle, Some("Quit 6pm"))?,
+                    &PredefinedMenuItem::quit(handle, Some("Quit 5pm"))?,
                 ],
             )?;
 
