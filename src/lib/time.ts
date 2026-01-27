@@ -3,7 +3,7 @@ export interface TimeRemaining {
   minutes: number;
 }
 
-export function getTimeUntilTarget(targetHour: number = 18, targetMinute: number = 0): TimeRemaining {
+export function getTimeUntilTarget(targetHour: number = 17, targetMinute: number = 0): TimeRemaining {
   const now = new Date();
   const target = new Date(now);
 

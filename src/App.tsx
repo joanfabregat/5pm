@@ -5,7 +5,7 @@ import { isTauri, loadTargetHour, saveTargetHour, loadTargetMinute, saveTargetMi
 import { useUpdater } from './hooks/useUpdater';
 
 function App() {
-  const [targetHour, setTargetHour] = useState(18);
+  const [targetHour, setTargetHour] = useState(17);
   const [targetMinute, setTargetMinute] = useState(0);
   const [alwaysOnTop, setAlwaysOnTop] = useState(false);
   const [showSettings, setShowSettings] = useState(false);

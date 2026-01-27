@@ -3,7 +3,7 @@ export const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in
 
 // Storage abstraction that works on both web and desktop
 export async function loadTargetHour(): Promise<number> {
-  const DEFAULT_HOUR = 18;
+  const DEFAULT_HOUR = 17;
 
   if (isTauri) {
     try {
@@ -29,7 +29,7 @@ export async function saveTargetHour(hour: number): Promise<void> {
     try {
       const { load } = await import('@tauri-apps/plugin-store');
       const store = await load('settings.json', {
-        defaults: { targetHour: 18 },
+        defaults: { targetHour: 17 },
         autoSave: true,
       });
       await store.set('targetHour', hour);
